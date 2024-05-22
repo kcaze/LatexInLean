@@ -1,0 +1,5 @@
+{
+    "typescript.tsdk": "widget/.yarn/sdks/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "editor.formatOnSave": true
+}
