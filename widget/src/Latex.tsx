@@ -2,18 +2,38 @@ import { RpcContext, useAsync, mapRpcError } from "@leanprover/infoview";
 import katex from "katex";
 import React, { createElement } from "react";
 
+type ModuleDoc = {
+  pos: { line: number; column: number };
+  doc: string;
+};
+
 export default function (props) {
   const rpcContext = React.useContext(RpcContext);
-  const [ref, setRef] = React.useState(null);
   const asyncState = useAsync(
-    () => rpcContext.call("getType", { pos: props.pos }),
+    () => rpcContext.call("getModuleDocs", { pos: props.pos }),
     [rpcContext, props.pos]
   );
-  if (ref) {
-    const test = katex.render("hello", ref);
+  const docs: ModuleDoc[] =
+    asyncState.state === "resolved" && (asyncState.value as any);
+
+  let latexHtml = null;
+  if (docs && docs.length > 0) {
+    const doc = docs[docs.length - 1].doc;
+    latexHtml = doc
+      .split("$")
+      .map((s, i) => {
+        if (i % 2 == 0) {
+          return s;
+        } else {
+          try {
+            return katex.renderToString(s, { output: "mathml" });
+          } catch (e) {
+            return s;
+          }
+        }
+      })
+      .join("");
   }
-  const element =
-    asyncState.state === "resolved" &&
-    createElement("span", { ref: setRef }, asyncState.value as any);
-  return <div>{JSON.stringify(asyncState)}</div>;
+
+  return <div dangerouslySetInnerHTML={{ __html: latexHtml }}></div>;
 }

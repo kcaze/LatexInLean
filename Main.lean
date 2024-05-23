@@ -2,9 +2,8 @@ import «LatexInLean»
 
 import Lean
 open Lean Elab Widget
-show_panel_widgets [latex with r"\sum_{n=0}^1"]
+show_panel_widgets [latex]
 
-/-! Hello World! \[\sum_{n=0}^\infty a_nx^n\]. $$\int_{n=0}^\infty$$-/
-
-theorem test : 1 = 1 := by
-    sorry
+/-! Proves that $1+1 = 2$ is true.-/
+theorem test : 1+1 = 2 := by
+    simp
