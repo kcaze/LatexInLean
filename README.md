@@ -8,7 +8,7 @@ This package adds a widget that renders Latex in doc modules into the Lean infov
    ```
    require LatexInLean from git "https://github.com/kcaze/LatexInLean.git"@"main"
    ```
-2. Run the `lake update` in the root directory of your Lean project.
+2. Run the `lake update LatexInLean` in the root directory of your Lean project.
 
 ## Usage
 
