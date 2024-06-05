@@ -19,7 +19,6 @@ def getModuleDocs (params : GetModuleDocsRequest) : RequestM (RequestTask (Array
     runTermElabM snap do
       return Array.map (fun x => JsonModuleDoc.mk x.doc x.declarationRange.pos) (PersistentArray.toArray (getMainModuleDoc snap.env))
 
-
 @[widget]
 def latex :
 Widget.Module where

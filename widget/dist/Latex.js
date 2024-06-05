@@ -2,6 +2,7 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import { RpcContext, useAsync } from "@leanprover/infoview";
 import katex from "katex";
 import React from "react";
+import "./css/katex.min.css";
 export default function (props) {
     const rpcContext = React.useContext(RpcContext);
     const asyncState = useAsync(() => rpcContext.call("getModuleDocs", { pos: props.pos }), [rpcContext, props.pos]);
@@ -17,7 +18,7 @@ export default function (props) {
             }
             else {
                 try {
-                    return katex.renderToString(s, { output: "mathml" });
+                    return katex.renderToString(s, { output: "html" });
                 }
                 catch (e) {
                     return s;

@@ -4,6 +4,8 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import terser from '@rollup/plugin-terser';
+import postcss from 'rollup-plugin-postcss';
+import url from "postcss-url";
 
 /** @type {(_: any) => import('rollup').RollupOptions} */
 export default _cliArgs => {
@@ -28,6 +30,13 @@ export default _cliArgs => {
         '@leanprover/infoview',
     ],
     plugins: [
+        postcss({
+            plugins: [
+                url({
+                  url: "inline", // enable inline assets using base64 encoding
+                }),
+              ],
+        }),
         nodeResolve({
             browser: true
         }),

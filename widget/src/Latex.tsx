@@ -1,6 +1,7 @@
 import { RpcContext, useAsync, mapRpcError } from "@leanprover/infoview";
 import katex from "katex";
 import React, { createElement } from "react";
+import "./css/katex.min.css";
 
 type ModuleDoc = {
   pos: { line: number; column: number };
@@ -26,7 +27,7 @@ export default function (props) {
           return s;
         } else {
           try {
-            return katex.renderToString(s, { output: "mathml" });
+            return katex.renderToString(s, { output: "html" });
           } catch (e) {
             return s;
           }
