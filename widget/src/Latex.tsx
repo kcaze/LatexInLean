@@ -14,8 +14,19 @@ export default function (props) {
     () => rpcContext.call("getModuleDocs", { pos: props.pos }),
     [rpcContext, props.pos]
   );
-  const docs: ModuleDoc[] =
-    asyncState.state === "resolved" && (asyncState.value as any);
+  // Cursor position is 0-indexed but module docs are 1-indexed.
+  // So add 1 to the line and column.
+  const cursorPos = {line: props.pos.line + 1, column: props.pos.character + 1};
+  const allDocs: ModuleDoc[] = Array.from(
+    asyncState.state === "resolved" && (asyncState.value as any));
+
+  const docs = [];
+  // Only keep docs before the cursor.
+  for (const doc of allDocs) {
+    if (doc.pos.line <= cursorPos.line) {
+      docs.push(doc);
+    }
+  }
 
   let latexHtml = null;
   if (docs && docs.length > 0) {
