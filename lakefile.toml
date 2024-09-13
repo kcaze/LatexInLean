@@ -1,0 +1,7 @@
+name = "LeanTex"
+defaultTargets = ["LeanTex"]
+
+[[lean_lib]]
+name = "LeanTex"
+srcDir = "src"
+roots = ["LeanTex"]
